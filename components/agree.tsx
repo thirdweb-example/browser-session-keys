@@ -7,6 +7,7 @@ import {
   useCreateWalletInstance,
   WalletInstance,
   ConnectWallet,
+  useAccountSigners,
 } from "@thirdweb-dev/react";
 import { activeChain, factoryAddress } from "../const";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
@@ -42,6 +43,9 @@ export const Agree = ({
   // get instance of the smart walleet account contract
   const { contract: accountContract } = useContract(accountContractAddress);
 
+  // View the account signers
+  const { data: signers, isLoading } = useAccountSigners(accountContract);
+
   const initializeWallet = () => {
     // create a local wallet instance
     const walletConfig = localWallet();
@@ -76,18 +80,25 @@ export const Agree = ({
       console.log("smart wallet address:", smartWalletAddress);
       //generate the session key and store it in the browser
       generateSessionKey(sessionKey as LocalWallet, pwd);
-      const permissions = {
-        approvedCallTargets: ["0x2D7Ef62705eaa2e990104E75B0F4769D8c56816A"], //TODO add contract address
-        startDate: new Date(Date.now()),
-        expirationDate: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-        nativeTokenLimitPerTransaction: "1", //1 GoerliETH
-      };
-      // Add the local wallet as a signer on the smart wallet (currently connected as the smart wallet)
-      console.log("granting permissions...");
-      await accountContract?.account.grantPermissions(
-        (await sessionKey?.getAddress()) as string,
-        permissions
-      );
+      const keyAddress: string = (await sessionKey?.getAddress()) as string;
+      console.log("keyAddress:", keyAddress);
+      signers?.some((signer) => console.log(signer.signer, keyAddress));
+      if (signers?.some((signer) => signer.signer === keyAddress)) {
+        console.log("session key is already a signer on the smart wallet...");
+      } else {
+        const permissions = {
+          approvedCallTargets: ["0x2D7Ef62705eaa2e990104E75B0F4769D8c56816A"], //TODO add contract address
+          startDate: new Date(Date.now()),
+          expirationDate: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+          nativeTokenLimitPerTransaction: "1", //1 GoerliETH
+        };
+        // Add the local wallet as a signer on the smart wallet (currently connected as the smart wallet)
+        console.log("granting permissions...");
+        await accountContract?.account.grantPermissions(
+          keyAddress,
+          permissions
+        );
+      }
 
       // connect the session key to the app: TODO do i need to do this
       console.log("connecting session key...");
