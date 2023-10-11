@@ -8,6 +8,7 @@ import {
   WalletInstance,
   ConnectWallet,
   useAccountSigners,
+  useCreateSessionKey,
 } from "@thirdweb-dev/react";
 import { activeChain, factoryAddress } from "../const";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
@@ -18,6 +19,7 @@ import {
   smartWalletActions,
 } from "../utils/wallets";
 import { Signer } from "ethers";
+import { create } from "domain";
 
 // Agree to let the app perform transactions on your behalf.
 // This step created a local wallet and stores it in the browser
@@ -44,7 +46,8 @@ export const Agree = ({
   const { contract: accountContract } = useContract(accountContractAddress);
 
   // View the account signers
-  const { data: signers, isLoading } = useAccountSigners(accountContract);
+  const { data: signers } = useAccountSigners(accountContract);
+  const { mutate: createSessionKey, isLoading, error } = useCreateSessionKey();
 
   const initializeWallet = () => {
     // create a local wallet instance
@@ -94,10 +97,7 @@ export const Agree = ({
         };
         // Add the local wallet as a signer on the smart wallet (currently connected as the smart wallet)
         console.log("granting permissions...");
-        await accountContract?.account.grantPermissions(
-          keyAddress,
-          permissions
-        );
+        await createSessionKey({ keyAddress, permissions });
       }
 
       // connect the session key to the app: TODO do i need to do this
