@@ -3,6 +3,12 @@ import {
   metamaskWallet,
   useAddress,
   Transaction,
+  smartWallet,
+  useWallet,
+  useConnect,
+  localWallet,
+  WalletConfig,
+  WalletInstance,
 } from "@thirdweb-dev/react";
 import styles from "../styles/Home.module.css";
 import { NextPage } from "next";
@@ -18,71 +24,28 @@ import {
 import { activeChain, factoryAddress } from "../const";
 
 const Home: NextPage = () => {
-  const [address, setAddress] = useState<string>();
+  const address = useAddress();
   const [password, setPassword] = useState("");
-  const [sessionKey, setSessionKey] = useState<LocalWallet>();
-  console.log("sessionKey:", sessionKey);
-  const permissions = {
-    approvedCallTargets: [""], //TODO add contract address
-    startDate: new Date(Date.now()),
-    expirationDate: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-    nativeTokenLimitPerTransaction: "1", //1 GoerliETH
-  };
-  const config: SmartWalletConfig = {
-    chain: activeChain,
-    factoryAddress: factoryAddress,
-    clientId: process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID,
-    gasless: true,
-  };
-  const metaMask = new MetaMaskWallet({});
-  const smartWallet = new SmartWallet(config);
-  const connectSmartWalletWithAdmin = async () => {
-    await smartWallet.connect({ personalWallet: metaMask });
-    //if smart wallet not alreADy deployed
-    if (await smartWallet.isDeployed()) {
-      setAddress(await smartWallet.getAddress());
-      console.log(
-        "smartWallet already deployed at address:",
-        await smartWallet.getAddress()
-      );
-      console.log("address:", address);
-      return;
-    } else {
-      await smartWallet.deploy();
-      setAddress(await smartWallet.getAddress());
-      console.log(
-        "smartWallet deployed at address:",
-        await smartWallet.getAddress()
-      );
-      console.log("address:", address);
-    }
-  };
+  const [hasSessionKey, setHasSessionKey] = useState<boolean>(false);
   return address ? (
-    sessionKey ? (
+    hasSessionKey ? (
       <div>
         <Connected />
       </div>
     ) : (
       <div>
-        <Agree
-          pwd={password}
-          sessionKey={sessionKey as LocalWallet}
-          permissions={permissions}
-          setSessionKey={setSessionKey}
+        <input
+          type="password"
+          placeholder="Password"
+          className={styles.input}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
+        <Agree pwd={password} setHasSessionKey={setHasSessionKey} />
       </div>
     )
   ) : (
-    <div>
-      <button onClick={() => connectSmartWalletWithAdmin()}>Connect</button>
-      <input
-        type="password"
-        placeholder="Password"
-        className={styles.input}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-    </div>
+    <ConnectWallet />
   );
 };
 
