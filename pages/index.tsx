@@ -34,14 +34,7 @@ const Home: NextPage = () => {
       </div>
     ) : (
       <div>
-        <input
-          type="password"
-          placeholder="Password"
-          className={styles.input}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Agree pwd={password} setHasSessionKey={setHasSessionKey} />
+        <Agree setHasSessionKey={setHasSessionKey} />
       </div>
     )
   ) : (
