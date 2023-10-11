@@ -30,14 +30,13 @@ const Home: NextPage = () => {
   const [signer, setSigner] = useState<Signer>();
   return address ? (
     hasSessionKey ? (
-      <div>
+      <div className={styles.container}>
         {signer ? (
           <>
-            <ConnectWallet />
             <SessionKeyConnected signer={signer} />
           </>
         ) : (
-          <p>loading...</p>
+          <h2>loading...</h2>
         )}
       </div>
     ) : (
@@ -46,7 +45,9 @@ const Home: NextPage = () => {
       </div>
     )
   ) : (
-    <ConnectWallet />
+    <div className={styles.container}>
+      <ConnectWallet />
+    </div>
   );
 };
 

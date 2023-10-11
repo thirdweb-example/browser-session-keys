@@ -6,6 +6,7 @@ import {
   useWallet,
   useCreateWalletInstance,
   WalletInstance,
+  ConnectWallet,
 } from "@thirdweb-dev/react";
 import { activeChain, factoryAddress } from "../const";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
@@ -110,7 +111,8 @@ export const Agree = ({
     }
   };
   return (
-    <div>
+    <div className={styles.container}>
+      <ConnectWallet />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -125,9 +127,10 @@ export const Agree = ({
           value={password}
           onChange={handlePasswordChange}
         />
-        <h1>Agree</h1>
         <p>Agree to allow the app to perform transactions on your behalf</p>
-        <button type="submit">Agree</button>
+        <button className={styles.button} type="submit">
+          Agree
+        </button>
       </form>
     </div>
   );
