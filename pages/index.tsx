@@ -28,25 +28,41 @@ const Home: NextPage = () => {
   const address = useAddress();
   const [hasSessionKey, setHasSessionKey] = useState<boolean>(false);
   const [signer, setSigner] = useState<Signer>();
-  return address ? (
-    hasSessionKey ? (
-      <div className={styles.container}>
-        {signer ? (
-          <>
-            <SessionKeyConnected signer={signer} />
-          </>
-        ) : (
-          <h2>loading...</h2>
-        )}
-      </div>
-    ) : (
-      <div>
-        <Agree setHasSessionKey={setHasSessionKey} setSigner={setSigner} />
-      </div>
-    )
-  ) : (
+  return (
     <div className={styles.container}>
-      <ConnectWallet />
+      <h1 className={styles.title}>
+        <span className={styles.gradientText0}>
+          <a
+            href="https://thirdweb.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Browser Session Keys
+          </a>{" "}
+        </span>
+        Smart Wallet Demo
+      </h1>
+      {address ? (
+        hasSessionKey ? (
+          <div className={styles.container}>
+            {signer ? (
+              <>
+                <SessionKeyConnected signer={signer} />
+              </>
+            ) : (
+              <h2>loading...</h2>
+            )}
+          </div>
+        ) : (
+          <div>
+            <Agree setHasSessionKey={setHasSessionKey} setSigner={setSigner} />
+          </div>
+        )
+      ) : (
+        <div className={styles.container}>
+          <ConnectWallet />
+        </div>
+      )}
     </div>
   );
 };

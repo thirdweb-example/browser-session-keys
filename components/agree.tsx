@@ -124,25 +124,27 @@ export const Agree = ({
   return (
     <div className={styles.container}>
       <ConnectWallet />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          createAndStore(password);
-          setHasSessionKey(true);
-        }}
-      >
-        <input
-          type="password"
-          placeholder="Password"
-          className={styles.input}
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <p>Agree to allow the app to perform transactions on your behalf</p>
-        <button className={styles.button} type="submit">
-          Agree
-        </button>
-      </form>
+      <div className={styles.container}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            createAndStore(password);
+            setHasSessionKey(true);
+          }}
+        >
+          <input
+            type="password"
+            placeholder="Password"
+            className={styles.input}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <p>Agree to allow the app to perform transactions on your behalf</p>
+          <button className={styles.button} type="submit">
+            Agree
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -10,15 +10,44 @@
   text-align: center;
 }
 
-.button {
-  background-color: #fff;
-  color: #111;
-  border: none;
+.input {
+  width: 100%;
+  height: 3rem;
   border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  border: 0;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.gradientText0 {
+  background: -webkit-linear-gradient(#bfa3da, #84309c, #c735b0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.button {
+  width: 30%;
+  height: 3rem;
+  border-radius: 10px;
+  border: 0;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: fff;
+  /* background: -webkit-linear-gradient(#eb0093, #fff); */
+  color: #111;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  opacity: 80%;
 }
 
 .gradientText0 {
@@ -58,7 +87,12 @@
 
 .title {
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .title,
