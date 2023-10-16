@@ -10,7 +10,7 @@
 }
 
 .main {
-  width: 40%;
+  width: 60%;
   height: 80%;
   min-width: 400px;
   max-width: 1440px;
@@ -28,9 +28,10 @@
 }
 
 .border {
+  width: 600px;
   border-radius: 0.75rem;
   margin: 2rem;
-  padding: 1rem;
+  padding: 3rem;
   background-color: rgba(19, 20, 23, 50);
 }
 
@@ -261,9 +262,6 @@
 }
 
 @media (max-width: 1200px) {
-  .main {
-    width: 50%;
-  }
   .description {
     font-size: 1rem;
   }
@@ -283,14 +281,16 @@
   .agree {
     padding: 0rem;
   }
-  .main {
-    width: 60%;
-  }
   .text {
     font-size: 0.75rem;
   }
   .description {
     font-size: 1rem;
+  }
+  .border {
+    width: 70%;
+    margin: 2rem;
+    padding: 1rem;
   }
   .title {
     font-size: 2rem;
@@ -298,6 +298,12 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  .border {
+    width: 90%;
   }
 }
 
