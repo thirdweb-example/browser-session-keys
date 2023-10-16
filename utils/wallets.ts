@@ -19,44 +19,41 @@ export const deploySmartWallet = async (smartWallet: SmartWallet) => {
   }
 };
 
-export const generateSessionKey = async (
-  sessionKey: LocalWallet,
-  pwd: string
-) => {
+export const generateSessionKey = async (sessionKey: LocalWallet) => {
   // generate the session key
   console.log("generating session key...");
   // check in local storage for existing wallet & then use the encrypted key to regenerate the same session key
-  if (localStorage.getItem("walletCreationTime")) {
-    const timeElapsed =
-      Date.now() - Number(localStorage.getItem("walletCreationTime"));
-    if (timeElapsed < 1000 * 60 * 60) {
-      console.log("using existing session key...");
-      const encryptedWallet = JSON.parse(
-        localStorage.getItem("wallet") as string
-      );
-      await sessionKey.import({
-        encryptedJson: encryptedWallet,
-        password: pwd,
-      });
-      return;
-    }
-  }
+  // if (localStorage.getItem("walletCreationTime")) {
+  //   const timeElapsed =
+  //     Date.now() - Number(localStorage.getItem("walletCreationTime"));
+  //   if (timeElapsed < 1000 * 60 * 60) {
+  //     console.log("using existing session key...");
+  //     const encryptedWallet = JSON.parse(
+  //       localStorage.getItem("wallet") as string
+  //     );
+  //     await sessionKey.import({
+  //       encryptedJson: encryptedWallet,
+  //       password: pwd,
+  //     });
+  //     return;
+  //   }
+  // }
   await sessionKey.generate();
   // encrypt the session key
-  console.log("encrypting session key...");
-  const encryptedWallet = await sessionKey.export({
-    strategy: "encryptedJson",
-    password: pwd,
-  });
+  //console.log("encrypting session key...");
+  // const encryptedWallet = await sessionKey.export({
+  //   strategy: "encryptedJson",
+  //   password: pwd,
+  // });
 
   // Convert the JSON object to a string
-  var encryptedString = JSON.stringify(encryptedWallet);
-  console.log("encryptedString:", encryptedString);
+  // var encryptedString = JSON.stringify(encryptedWallet);
+  // console.log("encryptedString:", encryptedString);
 
   // Store the string in sessionStorage
-  console.log("storing session key in session storage...");
-  localStorage.setItem("walletCreationTime", Date.now().toString());
-  localStorage.setItem("wallet", encryptedString);
+  // console.log("storing session key in session storage...");
+  // localStorage.setItem("walletCreationTime", Date.now().toString());
+  // localStorage.setItem("wallet", encryptedString);
 };
 
 export const smartWalletActions = async (

@@ -1,13 +1,72 @@
 .container {
   width: 100%;
-  max-width: 1440px;
-  padding: 1rem;
-  margin: 1rem;
+  padding: 0rem;
+  margin: 0rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.main {
+  width: 40%;
+  height: 80%;
+  min-width: 400px;
+  max-width: 1440px;
+  margin: 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.line {
+  border: 0.5px solid #272b30;
+  width: 90%;
+}
+
+.border {
+  border-radius: 0.75rem;
+  margin: 2rem;
+  padding: 1rem;
+  background-color: rgba(19, 20, 23, 50);
+}
+
+.agree {
+  width: 100%;
+  max-width: 1440px;
+  padding: 1rem;
+  margin: 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.project {
+  color: #4a92fe;
+}
+.project:hover,
+.project:focus,
+.project:active {
+  cursor: pointer;
+  opacity: 80%;
+}
+
+.text {
+  width: 100%;
+  margin: 0rem;
+  padding: 1rem 1rem;
 }
 
 .input {
@@ -28,7 +87,7 @@
 }
 
 .button {
-  width: 30%;
+  width: 120px;
   height: 3rem;
   border-radius: 10px;
   border: 0;
@@ -47,6 +106,7 @@
 .button:hover,
 .button:focus,
 .button:active {
+  cursor: pointer;
   opacity: 80%;
 }
 
@@ -85,19 +145,48 @@
   text-decoration-color: #84309c;
 }
 
+.half {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancel {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 1rem 3rem;
+}
+.cancel:hover,
+.cancel:focus,
+.cancel:active {
+  cursor: pointer;
+  opacity: 80%;
+}
+
+.agree {
+  text-align: left;
+}
+
 .title {
   line-height: 1.15;
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.title,
-.description {
-  text-align: left;
+  padding: 1rem 0rem 0rem 0rem;
+  margin: 0rem;
 }
 
 .connect {
@@ -105,10 +194,9 @@
 }
 
 .description {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
+  line-height: 1;
   font-size: 1.5rem;
+  margin: 1rem 0rem 2rem 0rem;
 }
 
 .code {
@@ -172,17 +260,44 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  .header {
-    margin-left: 0;
+@media (max-width: 1200px) {
+  .main {
+    width: 50%;
+  }
+  .description {
+    font-size: 1rem;
+  }
+  .title {
+    font-size: 2rem;
   }
   .grid {
     width: 100%;
     flex-direction: column;
   }
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-left: 0;
+  }
+  .agree {
+    padding: 0rem;
+  }
+  .main {
+    width: 60%;
+  }
+  .text {
+    font-size: 0.75rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
   .title {
-    font-size: 3rem;
-    line-height: 1.15;
+    font-size: 2rem;
+  }
+  .grid {
+    width: 100%;
+    flex-direction: column;
   }
 }
 
