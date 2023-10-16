@@ -9,6 +9,11 @@
   text-align: center;
 }
 
+.trust {
+  color: #4a92fe;
+  font-weight: bold;
+}
+
 .main {
   width: 60%;
   height: 80%;
@@ -68,6 +73,7 @@
   width: 100%;
   margin: 0rem;
   padding: 1rem 1rem;
+  color: 111;
 }
 
 .input {

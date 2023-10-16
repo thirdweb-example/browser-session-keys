@@ -139,15 +139,20 @@ export const Agree = ({
           </p>
           <li className={styles.list}>Send transactions on your behalf</li>
           <li className={styles.list}>
-            Only call this contract: <a href={editionDropHref}>{editionDrop}</a>
+            Call this{" "}
+            <a className={styles.project} href={editionDropHref}>
+              contract
+            </a>
           </li>
           <li className={styles.list}>
-            Send a maximum of 1 ETH from your smart wallet
+            Send a maximum of <span className={styles.project}>1 ETH</span> from
+            your smart wallet
           </li>
           <li className={styles.list}>
-            Have signer permissions on your smart wallet for 1 hour
+            Gain signer permissions for{" "}
+            <span className={styles.project}>1 hour</span>
           </li>
-          <p>Make sure you trust {project}</p>
+          <p className={styles.trust}>Make sure you trust {project}</p>
           <p>
             You are exposing your smart wallet to an external party. To view the
             external parties which have access to your smart wallet view your{" "}
