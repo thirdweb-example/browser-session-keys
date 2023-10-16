@@ -9,6 +9,19 @@
   text-align: center;
 }
 
+.list {
+  list-style: none; /* Remove default bullets */
+  text-align: left;
+}
+
+.list::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: #4a92fe; /* Change the color */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 2em; /* Also needed for space (tweak if needed) */
+  margin-left: 4em; /* Also needed for space (tweak if needed) */
+}
+
 .trust {
   color: #4a92fe;
   font-weight: bold;
@@ -181,7 +194,7 @@
 }
 
 .agree {
-  text-align: left;
+  text-align: center;
 }
 
 .title {
@@ -222,7 +235,7 @@
 
 .card {
   background-color: #131313;
-  text-align: left;
+  text-align: center;
   color: inherit;
   text-decoration: none;
   border-radius: 10px;

@@ -145,8 +145,7 @@ export const Agree = ({
             </a>
           </li>
           <li className={styles.list}>
-            Send a maximum of <span className={styles.project}>1 ETH</span> from
-            your smart wallet
+            Send a maximum of <span className={styles.project}>1 ETH</span>
           </li>
           <li className={styles.list}>
             Gain signer permissions for{" "}
