@@ -5,30 +5,29 @@ import {
   localWallet,
   useWallet,
   useCreateWalletInstance,
-  WalletInstance,
   ConnectWallet,
   useAccountSigners,
   useCreateSessionKey,
+  useDisconnect,
 } from "@thirdweb-dev/react";
 import { activeChain, factoryAddress } from "../const";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import styles from "../styles/Home.module.css";
-import {
-  deploySmartWallet,
-  generateSessionKey,
-  smartWalletActions,
-} from "../utils/wallets";
+import { deploySmartWallet, generateSessionKey } from "../utils/wallets";
 import { Signer } from "ethers";
-import { create } from "domain";
 
 // Agree to let the app perform transactions on your behalf.
 // This step created a local wallet and stores it in the browser
 export const Agree = ({
   setHasSessionKey,
   setSigner,
+  setText,
+  project,
 }: {
   setHasSessionKey: Dispatch<SetStateAction<boolean>>;
   setSigner: Dispatch<SetStateAction<Signer | undefined>>;
+  setText: Dispatch<SetStateAction<string>>;
+  project: string;
 }) => {
   const connectedSmartWallet = useWallet("smartWallet");
   const [sessionKey, setSessionKey] = useState<LocalWallet>();
@@ -36,11 +35,18 @@ export const Agree = ({
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
+  useEffect(() => {
+    setText("Wants to access your Smart Wallet");
+  }, []);
 
   // create wallet instance hook
   const createWalletInstance = useCreateWalletInstance();
   // get the smart wallet account address
   const accountContractAddress = useAddress();
+
+  const href: string = `https://thirdweb.com/${activeChain.slug}/${accountContractAddress}`;
+
+  const disconnect = useDisconnect();
 
   // get instance of the smart walleet account contract
   const { contract: accountContract } = useContract(accountContractAddress);
@@ -73,7 +79,7 @@ export const Agree = ({
   };
   const smartWallet = new SmartWallet(config);
 
-  const createAndStore = async (pwd: string) => {
+  const createAndStore = async () => {
     try {
       // deploy the smart wallet
       console.log("deploying smart wallet...");
@@ -82,7 +88,7 @@ export const Agree = ({
       );
       console.log("smart wallet address:", smartWalletAddress);
       //generate the session key and store it in the browser
-      generateSessionKey(sessionKey as LocalWallet, pwd);
+      generateSessionKey(sessionKey as LocalWallet);
       const keyAddress: string = (await sessionKey?.getAddress()) as string;
       console.log("keyAddress:", keyAddress);
       signers?.some((signer) => console.log(signer.signer, keyAddress));
@@ -124,26 +130,50 @@ export const Agree = ({
   return (
     <div className={styles.container}>
       <ConnectWallet />
-      <div className={styles.container}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createAndStore(password);
-            setHasSessionKey(true);
-          }}
-        >
-          <input
-            type="password"
-            placeholder="Password"
-            className={styles.input}
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <p>Agree to allow the app to perform transactions on your behalf</p>
-          <button className={styles.button} type="submit">
-            Agree
-          </button>
-        </form>
+      <div className={styles.agree}>
+        <div className={styles.text}>
+          <p>
+            This will allow <span className={styles.project}>{project}</span>{" "}
+            to:
+          </p>
+          <li className={styles.list}>
+            Send transactions to this edition contract on your behalf
+          </li>
+          <li className={styles.list}>
+            Send a maximum of 1 ETH from your smart wallet
+          </li>
+          <li className={styles.list}>
+            Have signer permissions on your smart wallet for 1 hour
+          </li>
+          <p>Make sure you trust {project}</p>
+          <p>
+            You are exposing your smart wallet to an external party. To view the
+            external parties which have access to your smart wallet view your{" "}
+            <a href={href} className={styles.project}>
+              Account Dashboard
+            </a>
+          </p>
+        </div>
+        <hr className={styles.line} />
+        <div className={styles.buttonContainer}>
+          <div className={styles.half}>
+            <button className={styles.cancel} onClick={disconnect}>
+              Cancel
+            </button>
+          </div>
+          <div className={styles.half}>
+            <button
+              className={styles.button}
+              onClick={(e) => {
+                e.preventDefault();
+                createAndStore();
+                setHasSessionKey(true);
+              }}
+            >
+              Agree
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
