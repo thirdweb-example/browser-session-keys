@@ -10,7 +10,7 @@ import {
   useCreateSessionKey,
   useDisconnect,
 } from "@thirdweb-dev/react";
-import { activeChain, factoryAddress } from "../const";
+import { activeChain, editionDrop, factoryAddress } from "../const";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import { deploySmartWallet, generateSessionKey } from "../utils/wallets";
@@ -45,6 +45,7 @@ export const Agree = ({
   const accountContractAddress = useAddress();
 
   const href: string = `https://thirdweb.com/${activeChain.slug}/${accountContractAddress}`;
+  const editionDropHref: string = `https://thirdweb.com/${activeChain.slug}/${editionDrop}`;
 
   const disconnect = useDisconnect();
 
@@ -136,8 +137,9 @@ export const Agree = ({
             This will allow <span className={styles.project}>{project}</span>{" "}
             to:
           </p>
+          <li className={styles.list}>Send transactions on your behalf</li>
           <li className={styles.list}>
-            Send transactions to this edition contract on your behalf
+            Only call this contract: <a href={editionDropHref}>{editionDrop}</a>
           </li>
           <li className={styles.list}>
             Send a maximum of 1 ETH from your smart wallet
